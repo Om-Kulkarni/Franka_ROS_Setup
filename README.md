@@ -134,6 +134,34 @@ catkin_make
 colcon build
 ```
 
+### Testing the Setup
+
+After setting up the environment, you can verify that everything is working correctly by testing the gripper functionality:
+
+#### ROS 1
+```bash
+# Inside the ROS 1 container
+roslaunch franka_gripper franka_gripper.launch robot_ip:=172.16.0.2  # Replace with your robot's IP
+```
+
+This will start the gripper node and you should see output about the gripper state and joint positions. If successful, you'll see messages about:
+- Gripper device status
+- Joint states
+- Gripper width values
+- Action server status
+
+#### ROS 2
+```bash
+# Inside the ROS 2 container
+ros2 launch franka_gripper gripper.launch.py robot_ip:=172.16.0.2  # Replace with your robot's IP
+```
+
+If you see error messages or no gripper feedback, check:
+1. Robot IP address is correct
+2. FCI is enabled in the desk interface
+3. Network connection is stable
+4. No other nodes are controlling the gripper
+
 ## Repository Structure
 
 ```
