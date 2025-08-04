@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  ros1-franka:
+    build:
+      context: ./ros1
+      dockerfile: Dockerfile
+      args:
+        - USER_UID=1001
+        - USER_GID=1001
+        - USERNAME=user
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - LIBFRANKA_IP=172.16.0.2  # Replace with your Franka robot's IP
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    network_mode: "host"  # Required for ROS network and robot communication
+    privileged: true      # Required for real-time control
+    command: bash -c "source /opt/ros/noetic/setup.bash && source /catkin_ws/devel/setup.bash && bash"
+
+  ros2-franka:
+    build:
+      context: ./ros2
+      dockerfile: Dockerfile
+      args:
+        - USER_UID=1001
+        - USER_GID=1001
+        - USERNAME=user
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - LIBFRANKA_IP=172.16.0.2  # Replace with your Franka robot's IP
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    network_mode: "host"  # Required for ROS network and robot communication
+    privileged: true      # Required for real-time control
+    command: bash -c "source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && bash"
+
+networks:
+  default:
+    driver: bridge
