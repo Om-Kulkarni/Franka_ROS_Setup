@@ -8,6 +8,22 @@ This guide provides step-by-step instructions for setting up and operating the F
 - Docker and Docker Compose installed
 - Ethernet connection to the Franka robot
 - Basic knowledge of ROS and Docker
+- Git installed
+
+## Installation
+
+Clone this repository and its submodules:
+
+```bash
+# Clone the main repository
+git clone https://github.com/Om-Kulkarni/Franka_ROS_Setup.git
+
+# Navigate to the repository
+cd Franka_ROS_Setup
+
+# Initialize and update submodules (franka_ros and panda_moveit_config)
+git submodule update --init --recursive
+```
 
 ## Setup Instructions
 
