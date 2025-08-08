@@ -1,5 +1,6 @@
 services:
   ros1-franka:
+    container_name: ros1-franka-container
     build:
       context: .
       dockerfile: Docker/ros1/Dockerfile
@@ -20,6 +21,7 @@ services:
     command: tail -f /dev/null    # Keep container running indefinitely
 
   ros2-franka:
+    container_name: ros2-franka-container
     build:
       context: .Docker/ros2
       dockerfile: Dockerfile
