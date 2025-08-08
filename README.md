@@ -29,6 +29,8 @@ git submodule update --init --recursive
 
 ### 1. Real-Time Kernel Setup
 
+For detailed instructions on installing and configuring the real-time kernel on Ubuntu, please refer to the [official Franka documentation Linux Installation Section](https://frankarobotics.github.io/docs/installation_linux.html).
+
 Start by booting your computer with the real-time kernel:
 
 1. During boot, press and hold the Shift key to access GRUB menu
@@ -66,6 +68,8 @@ Start by booting your computer with the real-time kernel:
 2. **Desk Interface Access**
    - Open a web browser
    - Navigate to the Franka desk interface: `http://172.16.0.2`
+   - You will need your Franka Desk Interface username and password to log in
+   - Contact your system administrator or refer to your robot's documentation for the credentials
    - If needed, consult your robot's configuration documentation for the exact IP
 
 ### 4. Enable FCI (Franka Control Interface)
