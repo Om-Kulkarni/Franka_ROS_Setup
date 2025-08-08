@@ -1,34 +1,34 @@
-version: '3.8'
-
 services:
   ros1-franka:
     build:
-      context: ./ros1
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Docker/ros1/Dockerfile
       args:
         - USER_UID=1001
         - USER_GID=1001
         - USERNAME=user
     environment:
-      - DISPLAY=${DISPLAY}
+      - DISPLAY=${DISPLAY:-:0}
       - QT_X11_NO_MITSHM=1
       - LIBFRANKA_IP=172.16.0.2  # Replace with your Franka robot's IP
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw  # For GUI applications in Ubuntu
     network_mode: "host"  # Required for ROS network and robot communication
     privileged: true      # Required for real-time control
-    command: bash -c "source /opt/ros/noetic/setup.bash && source /catkin_ws/devel/setup.bash && bash"
+    stdin_open: true     # Keep STDIN open
+    tty: true           # Allocate a pseudo-TTY
+    command: tail -f /dev/null    # Keep container running indefinitely
 
   ros2-franka:
     build:
-      context: ./ros2
+      context: .Docker/ros2
       dockerfile: Dockerfile
       args:
         - USER_UID=1001
         - USER_GID=1001
         - USERNAME=user
     environment:
-      - DISPLAY=${DISPLAY}
+      - DISPLAY=${DISPLAY:-host.docker.internal:0.0}
       - QT_X11_NO_MITSHM=1
       - LIBFRANKA_IP=172.16.0.2  # Replace with your Franka robot's IP
     volumes:
