@@ -110,23 +110,33 @@ Before running the containers, you can customize the environment by editing the 
 
 ### Starting the Containers
 
-### ROS 1 Environment
+#### Ubuntu Setup
+1. Allow X11 forwarding for GUI applications:
 ```bash
-docker compose up ros1-franka
+xhost +local:docker
 ```
 
-### ROS 2 Environment
+### Starting the ROS 1 Environment
 ```bash
-docker compose up ros2-franka
-```
+# Start the container in detached mode
+docker compose up -d ros1-franka
 
-To access the running container:
-```bash
-# For ROS 1
+# Access the running container
 docker compose exec ros1-franka bash
+```
 
-# For ROS 2
+### Starting the ROS 2 Environment
+```bash
+# Start the container in detached mode
+docker compose up -d ros2-franka
+
+# Access the running container
 docker compose exec ros2-franka bash
+```
+
+To stop the containers:
+```bash
+docker compose down
 ```
 
 If you've added custom packages, don't forget to build them inside the container:
