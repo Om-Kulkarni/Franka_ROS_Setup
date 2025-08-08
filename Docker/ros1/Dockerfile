@@ -24,6 +24,7 @@ RUN apt-get update && \
         curl \
         gdb \
         git \
+        cmake \
         nano \
         openssh-client \
         python3-catkin-tools \
@@ -47,22 +48,13 @@ USER $USERNAME
 # Install ROS 1 dependencies
 RUN sudo apt-get update \
     && sudo apt-get install -y --no-install-recommends \
-        ros-noetic-joint-state-publisher-gui \
-        ros-noetic-joint-state-publisher \
-        ros-noetic-controller-interface \
-        ros-noetic-controller-manager \
-        ros-noetic-moveit-core \
-        ros-noetic-moveit-ros-move-group \
-        ros-noetic-moveit-ros-visualization \
-        ros-noetic-moveit-kinematics \
-        ros-noetic-moveit-planners-ompl \
-        ros-noetic-joint-trajectory-controller \
-        ros-noetic-gazebo-ros-control \
-        ros-noetic-moveit-simple-controller-manager \
-        ros-noetic-realtime-tools \
-        ros-noetic-control-msgs \
-        ros-noetic-rviz \
-        ros-noetic-xacro \
+        ros-${ROS_DISTRO}-moveit \
+        ros-${ROS_DISTRO}-ros-controllers \
+        ros-${ROS_DISTRO}-gazebo-ros-control \
+        ros-${ROS_DISTRO}-combined-robot-hw \
+        ros-${ROS_DISTRO}-libfranka \
+        ros-${ROS_DISTRO}-xacro \
+        ros-${ROS_DISTRO}-boost-sml \
     && sudo apt-get clean \
     && sudo rm -rf /var/lib/apt/lists/*
 
@@ -71,17 +63,22 @@ WORKDIR /catkin_ws
 # Set the default shell to bash
 SHELL [ "/bin/bash", "-c" ]
 
-# Create workspace and clone repositories
+# Create workspace and copy repositories from project root
 WORKDIR /catkin_ws
-RUN mkdir -p /catkin_ws/src && \
-    cd /catkin_ws/src && \
-    git clone https://github.com/frankarobotics/franka_ros.git && \
-    git clone https://github.com/moveit/panda_moveit_config.git && \
+RUN mkdir -p /catkin_ws/src
+
+# Copy repositories from project root
+COPY franka_ros /catkin_ws/src/franka_ros/
+COPY panda_moveit_config /catkin_ws/src/panda_moveit_config/
+
+# Initialize rosdep and build workspace
+RUN sudo rosdep init || true && \
+    rosdep update --include-eol-distros && \
     cd /catkin_ws && \
     /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && catkin_make"
 
 # Copy the entrypoint script and make it executable
-COPY ./franka_entrypoint.sh /franka_entrypoint.sh
+COPY Docker/ros1/franka_entrypoint.sh /franka_entrypoint.sh
 RUN sudo chmod +x /franka_entrypoint.sh
 
 ENTRYPOINT [ "/franka_entrypoint.sh" ]
