@@ -13,6 +13,28 @@ This guide provides step-by-step instructions for setting up and operating the F
 - Basic knowledge of ROS and Docker
 - Git installed
 
+### Installing Docker and Git
+
+**Docker:**
+Follow the official instructions for your OS: [Get Docker](https://docs.docker.com/get-docker/)
+
+For Ubuntu, you can use:
+```bash
+sudo apt update
+sudo apt install docker.io docker-compose
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+```
+Log out and log back in for group changes to take effect.
+
+**Git:**
+For Ubuntu:
+```bash
+sudo apt update
+sudo apt install git
+```
+For other platforms, see: [Git Downloads](https://git-scm.com/downloads)
+
 ## Installation
 
 Clone this repository and its submodules:
