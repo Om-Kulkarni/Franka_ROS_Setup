@@ -103,8 +103,12 @@ Start by booting your computer with the real-time kernel:
 
 ### 4. Enable FCI (Franka Control Interface)
 
-1. In the desk interface, activate the FCI
-2. This step is crucial for ROS packages to communicate with the robot
+
+1. In the Franka Desk interface, first unlock the robot joints.
+2. Then activate the FCI (Franka Control Interface).
+3. This step is crucial for ROS packages to communicate with the robot
+
+   - Unlocking the joints should change the base lights from yellow to white, indicating the robot is ready for control.
 
    ![Enable FCI](images/enable_fci.jpeg)
 
