@@ -159,17 +159,13 @@ colcon build
 
 After setting up the environment, you can verify that everything is working correctly by testing the gripper functionality:
 
-#### ROS 1
+#### Control the Robot via MoveIt
 ```bash
 # Inside the ROS 1 container
-roslaunch franka_gripper franka_gripper.launch robot_ip:=172.16.0.2  # Replace with your robot's IP
+roslaunch panda_moveit_config franka_control.launch robot_ip:=<your robot's ip>
 ```
+This will launch the MoveIt control interface for the Franka robot. Replace `<your robot's ip>` with the actual IP address of your robot.
 
-This will start the gripper node and you should see output about the gripper state and joint positions. If successful, you'll see messages about:
-- Gripper device status
-- Joint states
-- Gripper width values
-- Action server status
 
 #### ROS 2
 ```bash
