@@ -16,6 +16,13 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw  # For GUI applications in Ubuntu
     network_mode: "host"  # Required for ROS network and robot communication
     privileged: true      # Required for real-time control
+    cap_add:
+      - SYS_NICE          # Required for real-time scheduling
+      - SYS_RAWIO         # Required for raw I/O operations
+      - SYS_TIME          # Required for high-resolution timers
+    ulimits:
+      rtprio: 99          # Set real-time priority
+      memlock: -1         # Remove memory locking limits
     stdin_open: true     # Keep STDIN open
     tty: true           # Allocate a pseudo-TTY
     command: tail -f /dev/null    # Keep container running indefinitely
