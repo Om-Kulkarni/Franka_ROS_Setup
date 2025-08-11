@@ -11,21 +11,23 @@ services:
     environment:
       - DISPLAY=${DISPLAY:-:0}
       - QT_X11_NO_MITSHM=1
-      - LIBFRANKA_IP=172.16.0.2  # Replace with your Franka robot's IP
+      - LIBFRANKA_IP=172.16.0.2           # Replace with your Franka robot's IP
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw  # For GUI applications in Ubuntu
-    network_mode: "host"  # Required for ROS network and robot communication
-    privileged: true      # Required for real-time control
+    network_mode: "host"                  # Required for ROS network and robot communication
+    privileged: true                      # Required for real-time control
     cap_add:
-      - SYS_NICE          # Required for real-time scheduling
-      - SYS_RAWIO         # Required for raw I/O operations
-      - SYS_TIME          # Required for high-resolution timers
+      - SYS_NICE                          # Required for real-time scheduling
+      - SYS_RAWIO                         # Required for raw I/O operations
+      - SYS_TIME                          # Required for high-resolution timers
     ulimits:
-      rtprio: 99          # Set real-time priority
-      memlock: -1         # Remove memory locking limits
-    stdin_open: true     # Keep STDIN open
-    tty: true           # Allocate a pseudo-TTY
-    command: tail -f /dev/null    # Keep container running indefinitely
+      rtprio: 99                          # Set real-time priority
+      memlock: -1                         # Remove memory locking limits
+    security_opt:
+      - seccomp:unconfined                # Disable seccomp filtering for rt operations
+    stdin_open: true                      # Keep STDIN open
+    tty: true                             # Allocate a pseudo-TTY
+    command: tail -f /dev/null            # Keep container running indefinitely
 
   ros2-franka:
     container_name: ros2-franka-container
