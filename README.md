@@ -1,5 +1,8 @@
 # Franka Robot Setup Guide
 
+
+![Franka Robot](images/Franka.jpeg)
+
 This guide provides step-by-step instructions for setting up and operating the Franka Emika robot using ROS (Robot Operating System) in a Docker environment.
 
 ## Prerequisites
@@ -55,6 +58,10 @@ Start by booting your computer with the real-time kernel:
    - You will hear the fans spinning
    - The robot will pulse yellow during startup
    - Wait until the pulsing stops, indicating startup completion
+
+3. **Franka Software Switch**
+   - Make sure the software switch is enabled in the Desk interface for robot operation
+   ![Franka Software Switch](images/Franka_software_switch.jpeg)
 
 ### 3. Network Configuration
 
